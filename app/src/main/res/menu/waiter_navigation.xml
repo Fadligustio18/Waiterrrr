@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_menu"
+        android:title="Pesanan"
+        android:icon="@drawable/img_1"/>
+    <item
+        android:id="@+id/nav_cart"
+        android:title="Keranjang"
+        android:icon="@drawable/img_7"/>
+</menu>
