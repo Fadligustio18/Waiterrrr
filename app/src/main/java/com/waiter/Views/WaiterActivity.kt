@@ -45,6 +45,10 @@ class WaiterActivity : AppCompatActivity() {
                     replaceFragment(CartFragment())
                     true
                 }
+                R.id.nav_notif -> {
+                    replaceFragment(StatusFragment())
+                    true
+                }
                 else -> false
             }
         }

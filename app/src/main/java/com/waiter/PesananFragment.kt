@@ -47,7 +47,7 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
         val rvMenuList = view.findViewById<RecyclerView>(R.id.rvMenuList)
 
         // Setup RecyclerView
-        menuAdapter = MenuAdapter(menuList) { position ->
+        menuAdapter = MenuAdapter(menuList, { position ->
             val menuToDelete = menuList[position]
             
             // Konversi ID String ke Int untuk API
@@ -70,7 +70,9 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
                 menuAdapter.notifyItemRemoved(position)
                 Toast.makeText(requireContext(), "${menuToDelete.name} dihapus lokal", Toast.LENGTH_SHORT).show()
             }
-        }
+        }, { menu ->
+            showEditDialog(menu)
+        })
         rvMenuList.adapter = menuAdapter
 
         // Tambahkan fungsi load data dari API
@@ -134,6 +136,49 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
         }
     }
 
+    private fun showEditDialog(menu: Menu) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_menu, null)
+        val etName = dialogView.findViewById<TextInputEditText>(R.id.etEditName)
+        val etPrice = dialogView.findViewById<TextInputEditText>(R.id.etEditPrice)
+
+        etName.setText(menu.name)
+        etPrice.setText(menu.price)
+
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle("Edit Menu")
+            .setView(dialogView)
+            .setPositiveButton("Simpan") { _, _ ->
+                val newName = etName.text.toString()
+                val newPrice = etPrice.text.toString()
+
+                if (newName.isNotEmpty() && newPrice.isNotEmpty()) {
+                    updateMenu(menu, newName, newPrice)
+                } else {
+                    Toast.makeText(requireContext(), "Nama dan Harga tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun updateMenu(oldMenu: Menu, newName: String, newPrice: String) {
+        val menuId = oldMenu.id.toIntOrNull() ?: return
+        
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Update Nama
+            val nameUpdateSuccess = menuController.updateMenuName(menuId, oldMenu.copy(name = newName))
+            // Update Harga
+            val priceUpdateSuccess = menuController.updateMenuPrice(menuId, oldMenu.copy(price = newPrice))
+
+            if (nameUpdateSuccess || priceUpdateSuccess) {
+                loadMenuFromServer() // Refresh list
+                Toast.makeText(requireContext(), "Menu berhasil diperbarui", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Gagal memperbarui menu", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun loadMenuFromServer() {
         viewLifecycleOwner.lifecycleScope.launch {
             val response = menuController.getMenu()
@@ -144,7 +189,7 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
                         id = res.id.toString(),
                         name = res.name,
                         price = res.price.toString(),
-                        category = res.typeName,
+                        category = res.typeName ?: "Tanpa Kategori",
                         imageUrl = res.imageUrl // Menggunakan field imageUrl untuk Glide
                     )
                 }

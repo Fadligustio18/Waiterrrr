@@ -7,12 +7,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.waiter.Models.MejaModel
 import com.waiter.Models.MenuResponse
 import com.waiter.R
 import com.waiter.Services.Client
+import com.waiter.ViewModels.CartViewModel
 import com.waiter.WaiterMenuAdapter
 import kotlinx.coroutines.launch
 
@@ -22,8 +24,9 @@ class WaiterMenuFragment : Fragment(R.layout.fragment_waiter_menu) {
     private lateinit var tvSelectedTable: TextView
     private lateinit var btnSelectTable: Button
     
+    private val cartViewModel: CartViewModel by activityViewModels()
+    
     private var fullMenuList: List<MenuResponse> = emptyList()
-    private var selectedTable: MejaModel? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,13 +36,18 @@ class WaiterMenuFragment : Fragment(R.layout.fragment_waiter_menu) {
         btnSelectTable = view.findViewById(R.id.btnSelectTable)
         
         adapter = WaiterMenuAdapter(emptyList()) { menu ->
-            if (selectedTable == null) {
+            if (cartViewModel.selectedTable.value == null) {
                 Toast.makeText(requireContext(), "Pilih meja terlebih dahulu!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "${menu.name} ditambahkan ke meja ${selectedTable?.name}", Toast.LENGTH_SHORT).show()
+                cartViewModel.addToCart(menu)
+                Toast.makeText(requireContext(), "${menu.name} ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
             }
         }
         rvMenuList.adapter = adapter
+
+        cartViewModel.selectedTable.observe(viewLifecycleOwner) { table ->
+            tvSelectedTable.text = if (table != null) "Meja: ${table.name}" else "Pilih Meja"
+        }
 
         btnSelectTable.setOnClickListener {
             showTableSelectionDialog()
@@ -51,7 +59,6 @@ class WaiterMenuFragment : Fragment(R.layout.fragment_waiter_menu) {
     private fun showTableSelectionDialog() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // Ambil data meja dari API (sama seperti yang dipakai di Admin)
                 val response = Client.meja.getMeja()
                 if (response.isSuccessful) {
                     val tables = response.body() ?: emptyList()
@@ -60,9 +67,9 @@ class WaiterMenuFragment : Fragment(R.layout.fragment_waiter_menu) {
                     AlertDialog.Builder(requireContext())
                         .setTitle("Pilih Meja")
                         .setItems(tableNames) { _, which ->
-                            selectedTable = tables[which]
-                            tvSelectedTable.text = "Meja: ${selectedTable?.name}"
-                            Toast.makeText(requireContext(), "Meja ${selectedTable?.name} dipilih", Toast.LENGTH_SHORT).show()
+                            val selectedTable = tables[which]
+                            cartViewModel.setSelectedTable(selectedTable)
+                            Toast.makeText(requireContext(), "Meja ${selectedTable.name} dipilih", Toast.LENGTH_SHORT).show()
                         }
                         .show()
                 } else {

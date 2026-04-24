@@ -69,4 +69,22 @@ class MenuControllers {
             null
         }
     }
+
+    suspend fun updateMenuName(id: Int, menu: com.waiter.Models.Menu): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val response = service.updateMenu(id, menu)
+            response.isSuccessful
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    suspend fun updateMenuPrice(id: Int, menu: com.waiter.Models.Menu): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val response = service.updateMenuPrice(id, menu)
+            response.isSuccessful
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

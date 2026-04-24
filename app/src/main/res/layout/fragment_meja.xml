@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F9FA"
+    android:background="@color/w"
     android:padding="20dp">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Manajemen Meja"
-        android:textColor="#121111"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="start"
@@ -37,8 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nomor atau Nama Meja"
-                app:boxStrokeColor="#FFC107"
-                app:hintTextColor="#FFC107"
+                app:boxStrokeColor="@color/d"
+                app:hintTextColor="@color/d"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
                 app:boxCornerRadiusTopEnd="16dp"
@@ -60,7 +60,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:backgroundTint="#FFC107"
+                android:backgroundTint="@color/w"
                 android:textColor="@android:color/white"
                 app:cornerRadius="16dp" />
         </LinearLayout>
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Meja Aktif"
-        android:textColor="#121111"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="12dp" />

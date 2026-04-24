@@ -11,7 +11,8 @@ import com.waiter.Models.Menu
 
 class MenuAdapter(
     private val menuList: MutableList<Menu>,
-    private val onDeleteClick: (Int) -> Unit
+    private val onDeleteClick: (Int) -> Unit,
+    private val onEditClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -20,6 +21,7 @@ class MenuAdapter(
         val tvItemCategory: TextView = view.findViewById(R.id.tvItemCategory)
         val tvItemPrice: TextView = view.findViewById(R.id.tvItemPrice)
         val btnDeleteItem: ImageView = view.findViewById(R.id.btnDeleteItem)
+        val btnEdit: ImageView = view.findViewById(R.id.btnEdit)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
@@ -47,6 +49,10 @@ class MenuAdapter(
 
         holder.btnDeleteItem.setOnClickListener {
             onDeleteClick(holder.adapterPosition)
+        }
+
+        holder.btnEdit.setOnClickListener {
+            onEditClick(menu)
         }
     }
 

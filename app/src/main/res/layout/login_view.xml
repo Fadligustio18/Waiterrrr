@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/w">
 
     <TextView
         android:id="@+id/textView"
@@ -13,7 +14,7 @@
         android:layout_marginBottom="25dp"
         android:text="@string/who"
         android:textAllCaps="false"
-        android:textColor="#121111"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/cardContainer"
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardBackgroundColor="#F5F6FA"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/textView"
@@ -53,7 +54,8 @@
                 app:boxCornerRadiusBottomStart="15dp"
                 app:boxCornerRadiusTopEnd="15dp"
                 app:boxCornerRadiusTopStart="15dp"
-                app:boxStrokeColor="#6200EE"
+                app:boxStrokeColor="@color/d"
+                app:hintTextColor="@color/d"
                 android:layout_marginBottom="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -66,6 +68,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
+                app:boxStrokeColor="@color/d"
+                app:hintTextColor="@color/d"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -88,7 +92,9 @@
                 android:id="@+id/LoginButton"
                 android:layout_marginTop="24dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/w"
+                android:textColor="@color/white"
                 android:text="@string/login" />
 
             <TextView

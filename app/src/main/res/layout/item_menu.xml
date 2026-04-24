@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="80dp"
@@ -58,11 +58,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp 0"
-                android:textColor="#6200EE"
+                android:textColor="@color/d"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
+        <ImageView
+            android:id="@+id/btnEdit"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:padding="4dp"
+            android:src="@drawable/img_5"
+            android:tint="#7a3200"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Edit Item"
+            android:layout_marginEnd="16dp"
+
+            />
 
         <ImageView
             android:id="@+id/btnDeleteItem"
@@ -70,8 +85,8 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:padding="4dp"
-            android:src="@android:drawable/ic_menu_delete"
-            app:tint="#FF0000"
+            android:src="@drawable/img_15"
+            app:tint="#7a3200"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
