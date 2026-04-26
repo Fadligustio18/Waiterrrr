@@ -28,6 +28,6 @@
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        tools:listitem="@android:layout/simple_list_item_1" />
+        tools:listitem="@layout/item_status_waiter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

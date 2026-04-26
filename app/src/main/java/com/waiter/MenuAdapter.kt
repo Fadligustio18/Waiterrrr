@@ -38,7 +38,7 @@ class MenuAdapter(
         if (menu.imageUri != null) {
             holder.ivItemImage.setImageURI(menu.imageUri)
         } else if (!menu.imageUrl.isNullOrEmpty()) {
-            val fullImageUrl = "http://192.168.69.151:3000${menu.imageUrl}"
+            val fullImageUrl = "http://192.168.1.7:3000${menu.imageUrl}"
             Glide.with(holder.itemView.context)
                 .load(fullImageUrl)
                 .placeholder(R.drawable.ic_launcher_background)
