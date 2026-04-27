@@ -3,7 +3,6 @@ package com.waiter.Services
 import com.waiter.Models.OrderDetailResponse
 import com.waiter.Models.OrderListItem
 import com.waiter.Models.OrderRequest
-import com.waiter.Models.OrderStatusRequest
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -18,6 +17,10 @@ interface OrderService {
     @GET("api/order/status/{id}")
     suspend fun getOrderByStatus(@Path("id") statusId: Int): Response<List<OrderListItem>>
 
+    // Gunakan Int jika di Postman statusId adalah angka (misal: 3)
     @PATCH("api/order/{id}/status")
-    suspend fun updateOrderStatus(@Path("id") orderId: Int, @Query("statusId") statusId: Int): Response<ResponseBody>
+    suspend fun updateOrderStatus(
+        @Path("id") orderId: Int,
+        @Query("statusId") statusId: Int
+    ): Response<ResponseBody>
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/w"
+    android:background="@color/white"
     android:padding="20dp">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Manajemen Meja"
-        android:textColor="@color/white"
+        android:textColor="#555555"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="start"
@@ -24,7 +24,7 @@
         android:layout_marginBottom="32dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="@android:color/white">
+        app:cardBackgroundColor="@color/s">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,8 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nomor atau Nama Meja"
-                app:boxStrokeColor="@color/d"
-                app:hintTextColor="@color/d"
+                app:boxStrokeColor="@color/a"
+                app:hintTextColor="@color/a"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
                 app:boxCornerRadiusTopEnd="16dp"
@@ -60,7 +61,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:backgroundTint="@color/w"
+                android:backgroundTint="@color/a"
                 android:textColor="@android:color/white"
                 app:cornerRadius="16dp" />
         </LinearLayout>
@@ -70,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Meja Aktif"
-        android:textColor="@color/white"
+        android:textColor="#555555"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="12dp" />

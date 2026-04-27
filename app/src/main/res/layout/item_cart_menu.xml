@@ -66,7 +66,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/img_15"
         android:scaleType="centerInside"
-        android:tint="#7a3200"
+        android:tint="@color/a"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

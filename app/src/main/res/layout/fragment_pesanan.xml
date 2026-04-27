@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/white">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:strokeWidth="0dp"
-        android:backgroundTint="@color/w">
+        android:backgroundTint="@color/s">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tambah Menu Baru"
-                android:textColor="@color/white"
+                android:textColor="#555555"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
@@ -39,7 +39,7 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
             app:strokeColor="#E0E0E0"
-            app:strokeWidth="1dp">
+            app:strokeWidth="5dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -86,8 +86,9 @@
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="@color/white">
+            app:boxStrokeColor="@color/a"
+            app:hintTextColor="@color/a"
+            app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etMenuName"
@@ -100,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Kategori"
-            android:textColor="@color/white"
+            android:textColor="#555555"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -119,7 +120,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="Makanan"
                 android:checked="true"
-                android:buttonTint="#7a3200"
+                android:buttonTint="@color/a"
                 />
 
             <RadioButton
@@ -127,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Minuman"
-                android:buttonTint="#7a3200"/>
+                android:buttonTint="@color/a"/>
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -141,8 +142,9 @@
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             app:prefixText="Rp. "
-            app:boxStrokeColor="@color/white"
-            app:hintTextColor="@color/white">
+            app:boxStrokeColor="@color/a"
+            app:hintTextColor="@color/a"
+            app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etMenuPrice"
@@ -160,13 +162,13 @@
             android:textStyle="bold"
             app:cornerRadius="12dp"
             android:textColor="@color/w"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="@color/a"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Daftar Menu Baru"
-            android:textColor="@color/white"
+            android:textColor="#555555"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="32dp"

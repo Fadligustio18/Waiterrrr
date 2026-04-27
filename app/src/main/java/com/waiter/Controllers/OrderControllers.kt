@@ -3,7 +3,6 @@ package com.waiter.Controllers
 import com.waiter.Models.OrderDetailResponse
 import com.waiter.Models.OrderListItem
 import com.waiter.Models.OrderRequest
-import com.waiter.Models.OrderStatusRequest
 import com.waiter.Services.Client
 import okhttp3.ResponseBody
 import retrofit2.Response

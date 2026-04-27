@@ -9,10 +9,12 @@
 
 
     <color name="white">#ffffff</color>
-    <color name="a">#2ec4b6</color>
-    <color name="s">#cbf3f0</color>
-    <color name="d">#ffbf69</color>
-    <color name="w">#ff9f1c</color>
+    <color name="a">#8c0c0c</color>
+    <color name="s">#FFB600</color>
+    <color name="d">#d2b48c</color>
+    <color name="w">#fff4ef</color>
+
+
     <color name="blue">#00BBEF</color>
     <color name="button">#6200EE</color>
     <color name="gray">#dfe0df</color>

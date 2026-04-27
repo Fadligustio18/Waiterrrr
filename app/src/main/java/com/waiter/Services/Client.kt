@@ -7,7 +7,7 @@ import kotlin.jvm.java
 
 object Client {
     // UBAH IP DI SINI SAJA
-    const val BASE_URL = "http://192.168.1.7:3000/"
+    const val BASE_URL = "http://192.168.69.101:3000/"
 
     private val http by lazy {
         Retrofit.Builder()

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/w">
+    android:background="@color/s">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/headerCard"
@@ -94,9 +94,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:menu="@menu/waiter_navigation"
-            android:background="@color/white"
-            app:itemIconTint="@color/nav_item_color"
-            app:itemTextColor="@color/nav_item_color"
+            android:background="@color/w"
+            app:itemIconTint="#555555"
+            app:itemTextColor="#555555"
             app:labelVisibilityMode="labeled" />
 
 

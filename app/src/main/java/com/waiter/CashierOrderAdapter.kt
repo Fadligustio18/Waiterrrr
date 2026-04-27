@@ -83,24 +83,30 @@ class CashierOrderAdapter(
 
         // Tombol Selesai Pembayaran (Status ID 5 atau selesaikan order)
         holder.btnDone.setOnClickListener {
-            processPayment(order.id, holder.itemView)
+            val position = holder.bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                processPayment(order.id, position)
+            }
         }
     }
 
-    private fun processPayment(orderId: Int, view: View) {
+    private fun processPayment(orderId: Int, position: Int) {
+        // Jalankan update ke backend di background
         scope.launch {
             try {
-                // Update status ke 5 (Selesai/Lunas)
                 val response = orderControllers.updateOrderStatus(orderId, 5)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(view.context, "Done! Terimakasih", Toast.LENGTH_LONG).show()
-                        onPaymentDone()
+                        onPaymentDone() // Refresh data asli dari server
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(view.context, "Gagal memproses pembayaran", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Gagal update: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

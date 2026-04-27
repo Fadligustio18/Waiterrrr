@@ -11,13 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/w">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/img_2"
-            app:tint="@color/d" />
+            app:tint="#555555" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -46,7 +47,7 @@
             android:layout_gravity="center_vertical"
             android:padding="4dp"
             android:src="@drawable/img_15"
-            app:tint="#FF0000"
+            app:tint="@color/a"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true" />
