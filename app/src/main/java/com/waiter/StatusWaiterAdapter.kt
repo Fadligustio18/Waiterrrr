@@ -37,11 +37,11 @@ class StatusWaiterAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orders[position]
-        holder.tvTableName.text = order.tableName
+        // Ganti tableName menjadi locationName
+        holder.tvTableName.text = order.locationName
         holder.tvStatus.text = "Status: ${order.statusName}"
 
         // Sembunyikan tombol Selesai jika status belum "Ready" (3)
-        // Jika Anda ingin tombol selalu muncul, hapus kondisi if ini
         if (order.statusId == 3) {
             holder.btnServed.visibility = View.VISIBLE
         } else {
@@ -64,8 +64,7 @@ class StatusWaiterAdapter(
         holder.layoutStatusHeader.setOnClickListener(toggleDropdown)
         holder.btnDrop.setOnClickListener(toggleDropdown)
 
-        // Tombol Selesai: Mengubah status menjadi 4 (Served/Delivered) atau 5 (Selesai/Paid)
-        // Kita gunakan status 4 untuk menandakan makanan sudah sampai ke meja
+        // Tombol Selesai: Mengubah status menjadi 4 (Served/Delivered)
         holder.btnServed.setOnClickListener {
             updateStatus(order.id, 4)
         }
@@ -77,9 +76,6 @@ class StatusWaiterAdapter(
                 val response = orderControllers.updateOrderStatus(orderId, statusId)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-                        // Refresh data setelah update
-                        // Karena kita tidak punya callback di constructor awal, 
-                        // kita perlu menambahkannya atau memanggil update data lokal
                         orders = orders.filter { it.id != orderId }
                         notifyDataSetChanged()
                     }
@@ -91,9 +87,10 @@ class StatusWaiterAdapter(
     private fun loadOrderDetails(holder: ViewHolder, orderId: Int) {
         scope.launch {
             try {
-                val response = orderControllers.getOrderById(orderId)
+                // Ganti getOrderById menjadi getOrderDetailById
+                val response = orderControllers.getOrderDetailById(orderId)
                 if (response.isSuccessful) {
-                    val items = response.body()?.items ?: emptyList()
+                    val items: List<OrderItemDetail> = response.body()?.items ?: emptyList()
                     withContext(Dispatchers.Main) {
                         holder.rvOrderItems.layoutManager = LinearLayoutManager(holder.itemView.context)
                         holder.rvOrderItems.adapter = StatusOrderItemAdapter(items)

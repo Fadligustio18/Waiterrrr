@@ -60,9 +60,32 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
                 lifecycleScope.launch {
                     try {
+                        // 1. Validasi Meja: Cek apakah meja masih aktif (Status 1, 2, 3, atau 4)
+                        // Meja baru bisa dipesan lagi jika status sebelumnya sudah 5 (Lunas)
+                        val activeStatusIds = listOf(1, 2, 3, 4)
+                        var isTableOccupied = false
+                        
+                        for (statusId in activeStatusIds) {
+                            val checkResp = orderControllers.getOrdersByStatus(statusId)
+                            if (checkResp.isSuccessful) {
+                                val activeOrders = checkResp.body() ?: emptyList()
+                                // Cek apakah ada order dengan locationId yang sama
+                                if (activeOrders.any { it.locationId == tableOrder.table.id }) {
+                                    isTableOccupied = true
+                                    break
+                                }
+                            }
+                        }
+
+                        if (isTableOccupied) {
+                            Toast.makeText(requireContext(), "Meja ${tableOrder.table.name} masih digunakan (Belum Lunas)!", Toast.LENGTH_LONG).show()
+                            return@launch
+                        }
+
+                        // 2. Jika meja kosong (Status 5), lanjutkan buat order baru
                         val response = orderControllers.createOrder(orderRequest)
                         if (response.isSuccessful) {
-                            Toast.makeText(requireContext(), "Pesanan dikirim ke Chef!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "Pesanan berhasil dikirim ke Chef!", Toast.LENGTH_SHORT).show()
                             cartViewModel.clearCartForTable(tableOrder.table.id)
                         } else {
                             Toast.makeText(requireContext(), "Gagal: ${response.message()}", Toast.LENGTH_SHORT).show()

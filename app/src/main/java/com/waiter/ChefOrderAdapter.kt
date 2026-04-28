@@ -44,7 +44,7 @@ class ChefOrderAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orders[position]
-        holder.tvTableName.text = order.tableName
+        holder.tvTableName.text = order.locationName
         holder.tvStatus.text = "Status: ${order.statusName}"
 
         holder.rvOrderItems.visibility = View.GONE
@@ -63,17 +63,17 @@ class ChefOrderAdapter(
         holder.layoutChefHeader.setOnClickListener(toggleDropdown)
         holder.btnDrop.setOnClickListener(toggleDropdown)
 
-        // Tombol Tunda (Status ID 1)
+        // Tombol Tunda (Status ID 1) - Kembali ke antrean
         holder.btnPending.setOnClickListener {
             updateStatus(order.id, 1)
         }
 
-        // Tombol Masak (Status ID 2)
+        // Tombol Masak (Status ID 2) - Mulai Memasak
         holder.btnCooking.setOnClickListener {
             updateStatus(order.id, 2)
         }
 
-        // Tombol Siap (Status ID 3)
+        // Tombol Siap (Status ID 3) - Selesai Masak & Siap Diantar
         holder.btnReady.setOnClickListener {
             updateStatus(order.id, 3)
         }
@@ -82,10 +82,9 @@ class ChefOrderAdapter(
     private fun loadOrderDetails(holder: ViewHolder, orderId: Int) {
         scope.launch {
             try {
-                val response = orderControllers.getOrderById(orderId)
+                val response = orderControllers.getOrderDetailById(orderId)
                 if (response.isSuccessful) {
-                    // response.body()?.items sekarang akan terbaca meskipun di JSON tulisannya "items" (kecil)
-                    val items = response.body()?.items ?: emptyList()
+                    val items: List<OrderItemDetail> = response.body()?.items ?: emptyList()
                     withContext(Dispatchers.Main) {
                         holder.rvOrderItems.layoutManager = LinearLayoutManager(holder.itemView.context)
                         holder.rvOrderItems.adapter = ChefOrderItemAdapter(items)

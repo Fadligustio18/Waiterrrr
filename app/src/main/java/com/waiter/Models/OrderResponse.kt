@@ -3,33 +3,31 @@ package com.waiter.Models
 import com.google.gson.annotations.SerializedName
 
 data class OrderListItem(
-    @SerializedName("Id") val id: Int,
-    @SerializedName("UserId") val userId: Int,
-    @SerializedName("CustomerName") val customerName: String? = "",
-    @SerializedName("Date") val date: String? = "",
-    @SerializedName("StatusId") val statusId: Int,
-    @SerializedName("LocationId") val locationId: Int,
-    @SerializedName("WaiterName") val waiterName: String? = "",
-    @SerializedName("StatusName") val statusName: String? = "",
-    @SerializedName(value = "TableName", alternate = ["LocationName"]) val tableName: String? = ""
+    @SerializedName(value = "id", alternate = ["Id"]) val id: Int,
+    @SerializedName(value = "userId", alternate = ["UserId"]) val userId: Int,
+    @SerializedName(value = "customerName", alternate = ["CustomerName"]) val customerName: String? = "",
+    @SerializedName(value = "date", alternate = ["Date"]) val date: String? = "",
+    @SerializedName(value = "statusId", alternate = ["StatusId"]) val statusId: Int,
+    @SerializedName(value = "locationId", alternate = ["LocationId"]) val locationId: Int,
+    @SerializedName(value = "userName", alternate = ["UserName", "WaiterName", "waiterName"]) val userName: String? = "",
+    @SerializedName(value = "statusName", alternate = ["StatusName"]) val statusName: String? = "",
+    @SerializedName(value = "locationName", alternate = ["LocationName", "TableName", "tableName"]) val locationName: String? = ""
 )
 
 data class OrderDetailResponse(
-    // Handle "Order" atau "order"
-    @SerializedName(value = "Order", alternate = ["order"]) val order: OrderListItem,
-    // Handle "Items" atau "items"
-    @SerializedName(value = "Items", alternate = ["items"]) val items: List<OrderItemDetail>
+    @SerializedName(value = "order", alternate = ["Order"]) val order: OrderListItem,
+    @SerializedName(value = "items", alternate = ["Items"]) val items: List<OrderItemDetail>
 )
 
 data class OrderItemDetail(
-    @SerializedName("Id") val id: Int,
-    @SerializedName("OrderId") val orderId: Int,
-    @SerializedName("MenuId") val menuId: Int,
-    @SerializedName("Quantity") val quantity: Int,
-    @SerializedName("PriceAtOrder") val priceAtOrder: Int,
-    @SerializedName("MenuName") val menuName: String? = ""
+    @SerializedName(value = "id", alternate = ["Id"]) val id: Int,
+    @SerializedName(value = "orderId", alternate = ["OrderId"]) val orderId: Int,
+    @SerializedName(value = "menuId", alternate = ["MenuId"]) val menuId: Int,
+    @SerializedName(value = "quantity", alternate = ["Quantity"]) val quantity: Int,
+    @SerializedName(value = "priceAtOrder", alternate = ["PriceAtOrder"]) val priceAtOrder: Int,
+    @SerializedName(value = "menuName", alternate = ["MenuName"]) val menuName: String? = ""
 )
 
 data class OrderStatusRequest(
-    val statusId: Int
+    @SerializedName("statusId") val statusId: Int
 )

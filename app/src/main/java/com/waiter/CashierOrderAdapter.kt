@@ -43,17 +43,17 @@ class CashierOrderAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orders[position]
-        holder.tvTableName.text = order.tableName
+        // Menggunakan locationName sesuai model terbaru
+        holder.tvTableName.text = order.locationName
         
-        // Sembunyikan daftar item di awal
         holder.rvOrderItems.visibility = View.GONE
 
-        // Load detail untuk menghitung total
         scope.launch {
             try {
-                val response = orderControllers.getOrderById(order.id)
+                // Menggunakan getOrderDetailById sesuai update terakhir di Controller
+                val response = orderControllers.getOrderDetailById(order.id)
                 if (response.isSuccessful) {
-                    val items = response.body()?.items ?: emptyList()
+                    val items: List<OrderItemDetail> = response.body()?.items ?: emptyList()
                     val totalItem = items.sumOf { it.quantity }
                     val totalPrice = items.sumOf { it.priceAtOrder * it.quantity }
 
@@ -81,32 +81,28 @@ class CashierOrderAdapter(
         holder.layoutCashierHeader.setOnClickListener(toggleDropdown)
         holder.btnDrop.setOnClickListener(toggleDropdown)
 
-        // Tombol Selesai Pembayaran (Status ID 5 atau selesaikan order)
         holder.btnDone.setOnClickListener {
-            val position = holder.bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                processPayment(order.id, position)
+            val currentPosition = holder.bindingAdapterPosition
+            if (currentPosition != RecyclerView.NO_POSITION) {
+                processPayment(holder.itemView.context, order.id)
             }
         }
     }
 
-    private fun processPayment(orderId: Int, position: Int) {
-        // Jalankan update ke backend di background
+    private fun processPayment(context: android.content.Context, orderId: Int) {
         scope.launch {
             try {
+
                 val response = orderControllers.updateOrderStatus(orderId, 5)
                 if (response.isSuccessful) {
                     withContext(Dispatchers.Main) {
-                        onPaymentDone() // Refresh data asli dari server
+                        Toast.makeText(context, "Pembayaran Berhasil. Pesanan selesai.", Toast.LENGTH_SHORT).show()
+                        onPaymentDone() // Merefresh list di CashierActivity
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        context,
-                        "Gagal update: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(context, "Gagal update: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }

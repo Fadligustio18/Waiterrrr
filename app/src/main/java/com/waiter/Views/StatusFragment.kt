@@ -39,19 +39,45 @@ class StatusFragment : Fragment(R.layout.fragment_status) {
     private fun fetchOrderStatus() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // Ambil status 1 (Pending), 2 (Cooking), dan 3 (Ready) untuk dipantau Waiter
+                android.util.Log.d("STATUS_DEBUG", "Fetching orders by status (Sesuai Swagger baru)")
+                
+                // Ambil status 1 (Pending), 2 (Cooking), dan 3 (Ready)
+                // Sekarang hanya butuh 1 parameter (statusId)
                 val resp1 = orderControllers.getOrdersByStatus(1)
                 val resp2 = orderControllers.getOrdersByStatus(2)
                 val resp3 = orderControllers.getOrdersByStatus(3)
 
                 val allOrders = mutableListOf<OrderListItem>()
-                if (resp1.isSuccessful) resp1.body()?.let { allOrders.addAll(it) }
-                if (resp2.isSuccessful) resp2.body()?.let { allOrders.addAll(it) }
-                if (resp3.isSuccessful) resp3.body()?.let { allOrders.addAll(it) }
+                
+                if (resp1.isSuccessful) {
+                    resp1.body()?.let { 
+                        android.util.Log.d("STATUS_DEBUG", "Status 1: ${it.size} items")
+                        allOrders.addAll(it) 
+                    }
+                }
+                
+                if (resp2.isSuccessful) {
+                    resp2.body()?.let { 
+                        android.util.Log.d("STATUS_DEBUG", "Status 2: ${it.size} items")
+                        allOrders.addAll(it) 
+                    }
+                }
+
+                if (resp3.isSuccessful) {
+                    resp3.body()?.let { 
+                        android.util.Log.d("STATUS_DEBUG", "Status 3: ${it.size} items")
+                        allOrders.addAll(it) 
+                    }
+                }
 
                 statusAdapter.updateData(allOrders.sortedByDescending { it.id })
                 
+                if (allOrders.isEmpty()) {
+                    android.util.Log.w("STATUS_DEBUG", "No orders returned from server for status 1, 2, or 3")
+                }
+                
             } catch (e: Exception) {
+                android.util.Log.e("STATUS_DEBUG", "Exception: ${e.message}")
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }

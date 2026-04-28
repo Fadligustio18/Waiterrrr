@@ -2,17 +2,18 @@ package com.waiter.Views
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.waiter.R
-
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import com.waiter.ChefOrderAdapter
 import com.waiter.Controllers.OrderControllers
 import com.waiter.Models.OrderListItem
+import com.waiter.R
 import kotlinx.coroutines.launch
 
 class ChefActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class ChefActivity : AppCompatActivity() {
     private lateinit var chefOrderAdapter: ChefOrderAdapter
     private val orderControllers = OrderControllers()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chef_activity)
@@ -28,13 +30,14 @@ class ChefActivity : AppCompatActivity() {
 
         rvChefOrders = findViewById(R.id.rvChefOrders)
         rvChefOrders.layoutManager = LinearLayoutManager(this)
-        
+
+
         chefOrderAdapter = ChefOrderAdapter(
             orders = emptyList(),
             orderControllers = orderControllers,
             scope = lifecycleScope,
             onStatusUpdate = {
-                fetchOrders() // Refresh data saat status diubah
+                fetchOrders()
             }
         )
         rvChefOrders.adapter = chefOrderAdapter
@@ -43,7 +46,6 @@ class ChefActivity : AppCompatActivity() {
 
         btnLogout = findViewById(R.id.btnLogout)
         btnLogout.setOnClickListener {
-            Toast.makeText(this, "LogOut Berhasil", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -51,27 +53,45 @@ class ChefActivity : AppCompatActivity() {
         }
     }
 
-    // D:/App_Projek/waiterrrrrrrrr/app/src/main/java/com/waiter/Views/ChefActivity.kt
-
-    // D:/App_Projek/waiterrrrrrrrr/app/src/main/java/com/waiter/Views/ChefActivity.kt
 
     private fun fetchOrders() {
         lifecycleScope.launch {
             try {
-                // Ambil data Pending (1)
+                Log.d("CHEF_DEBUG", "Fetching orders...")
+                
+                // Status 1: Pending, Status 2: Cooking
+                // Sesuai Swagger baru, tidak perlu parameter id (0) lagi
                 val respPending = orderControllers.getOrdersByStatus(1)
-                // Ambil data Masak (2)
                 val respCooking = orderControllers.getOrdersByStatus(2)
+
 
                 val allOrders = mutableListOf<OrderListItem>()
 
-                if (respPending.isSuccessful) respPending.body()?.let { allOrders.addAll(it) }
-                if (respCooking.isSuccessful) respCooking.body()?.let { allOrders.addAll(it) }
+                if (respPending.isSuccessful) {
+                    respPending.body()?.let { 
+                        Log.d("CHEF_DEBUG", "Found ${it.size} pending orders")
+                        allOrders.addAll(it) 
+                    }
+                } else {
+                    Log.e("CHEF_DEBUG", "Failed to fetch pending: ${respPending.errorBody()?.string()}")
+                }
 
-                // Tampilkan gabungan status 1 dan 2
+                if (respCooking.isSuccessful) {
+                    respCooking.body()?.let { 
+                        Log.d("CHEF_DEBUG", "Found ${it.size} cooking orders")
+                        allOrders.addAll(it) 
+                    }
+                }
+
+                // Update UI
                 chefOrderAdapter.updateData(allOrders.sortedBy { it.id })
+                
+                if (allOrders.isEmpty()) {
+                    Log.w("CHEF_DEBUG", "No orders found for status 1 or 2")
+                }
 
             } catch (e: Exception) {
+                Log.e("CHEF_DEBUG", "Exception: ${e.message}")
                 Toast.makeText(this@ChefActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }

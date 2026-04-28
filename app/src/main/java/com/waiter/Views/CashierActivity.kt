@@ -53,7 +53,8 @@ class CashierActivity : AppCompatActivity() {
     private fun fetchServedOrders() {
         lifecycleScope.launch {
             try {
-                // Kasir memantau status 4 (Served/Diantar)
+                // Kasir mengambil pesanan yang berstatus 3 (Ready)
+                // Setelah dibayar (Update ke 4), otomatis hilang dari daftar ini
                 val response = orderControllers.getOrdersByStatus(4)
                 if (response.isSuccessful) {
                     val orders = response.body() ?: emptyList()
