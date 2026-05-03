@@ -28,4 +28,6 @@
     <color name="cards">#FFFFFF</color>
 
 
+    <color name="orange_nav">#FF5722</color>
+    <color name="nav_unselected">#888888</color>
 </resources>

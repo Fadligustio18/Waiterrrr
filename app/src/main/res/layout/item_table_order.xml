@@ -22,7 +22,7 @@
             android:id="@+id/layoutTableHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/s"
+            android:background="#935c00"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="16dp">
@@ -72,16 +72,23 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Button
+            <!-- Ganti Button lama dengan SlideToActView -->
+            <com.ncorti.slidetoact.SlideToActView
                 android:id="@+id/btnCheckout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                app:backgroundTint="@color/a"
-                android:text="Checkout"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                app:cornerRadius="8dp" />
+                app:area_margin="4dp"
+                app:inner_color="@color/white"
+                app:outer_color="@color/a"
+                app:text="Checkout"
+                app:text_style="bold"
+                app:slider_icon="@drawable/img_8"
+                app:icon_margin="10dp"
+                app:slider_icon_color="@color/black"
+                app:text_size="14sp"
+                app:slider_height="50dp"
+                app:bump_vibration="50" />
         </LinearLayout>
 
     </LinearLayout>

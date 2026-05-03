@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.waiter.Models.CartItem
 import com.waiter.Models.TableOrder
+import com.ncorti.slidetoact.SlideToActView
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -26,7 +27,7 @@ class TableOrderAdapter(
         val ivExpand: ImageView = view.findViewById(R.id.ivExpand)
         val rvItems: RecyclerView = view.findViewById(R.id.rvItems)
         val tvTotal: TextView = view.findViewById(R.id.tvTotal)
-        val btnCheckout: Button = view.findViewById(R.id.btnCheckout)
+        val btnCheckout: SlideToActView = view.findViewById(R.id.btnCheckout)
         val layoutTableHeader: LinearLayout = view.findViewById(R.id.layoutTableHeader)
     }
 
@@ -64,8 +65,15 @@ class TableOrderAdapter(
             notifyItemChanged(position)
         }
 
-        holder.btnCheckout.setOnClickListener {
-            onCheckout(tableOrder)
+        // Reset slider ke posisi awal agar bisa digeser lagi nanti
+        holder.btnCheckout.setCompleted(false, false)
+        
+        holder.btnCheckout.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener {
+            override fun onSlideComplete(view: SlideToActView) {
+                onCheckout(tableOrder)
+                // Kembalikan slider ke posisi awal setelah checkout diproses
+                view.setCompleted(false, true)
+            }
         }
     }
 

@@ -11,7 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manajemen Meja"
+        android:text="Table Management"
         android:textColor="#555555"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -36,7 +36,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nomor atau Nama Meja"
+                android:hint="Insert Number or Name Table"
                 app:boxStrokeColor="@color/a"
                 app:hintTextColor="@color/a"
                 app:boxBackgroundColor="@color/white"
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="20dp"
-                android:text="+ Tambah Meja Baru"
+                android:text="+ Add Table"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -70,7 +70,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Meja Aktif"
+        android:text="New Table List"
         android:textColor="#555555"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -79,7 +79,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTableList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="333dp"
         android:layout_weight="1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

@@ -2,14 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item
     android:id="@+id/nav_work"
-    android:title="Daftar"
-    android:icon="@drawable/img"/>
+    android:title="Registration"
+    android:icon="@drawable/img_17"/>
     <item
         android:id="@+id/nav_menu"
-        android:title="Pesanan"
+        android:title="Add Menu"
         android:icon="@drawable/img_1"/>
     <item
         android:id="@+id/nav_table"
-        android:title="Meja"
+        android:title="Add Table"
         android:icon="@drawable/img_2"/>
+    <item
+        android:id="@+id/nav_form"
+        android:title="Member"
+        android:icon="@drawable/img"/>
 </menu>

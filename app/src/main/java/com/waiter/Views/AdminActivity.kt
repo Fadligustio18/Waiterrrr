@@ -1,128 +1,138 @@
 package com.waiter.Views
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.lifecycleScope
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.textfield.TextInputEditText
-import com.waiter.Controllers.AuthControllers
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.waiter.Models.UserRequest
-import com.waiter.PesananFragment
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.waiter.MejaFragment
+import com.waiter.PesananFragment
 import com.waiter.R
 import com.waiter.TabelFragment
-import kotlinx.coroutines.launch
 
 class AdminActivity : AppCompatActivity() {
-    private val authController = AuthControllers()
+
+    private lateinit var btnLogout: ImageView
+    
+    // Variabel untuk item navigasi kustom
+    private lateinit var itemWork: LinearLayout
+    private lateinit var itemMenu: LinearLayout
+    private lateinit var itemTable: LinearLayout
+    private lateinit var itemMember: LinearLayout
+    
+    private lateinit var iconWork: ImageView
+    private lateinit var iconMenu: ImageView
+    private lateinit var iconTable: ImageView
+    private lateinit var iconMember: ImageView
+    
+    private lateinit var textWork: TextView
+    private lateinit var textMenu: TextView
+    private lateinit var textTable: TextView
+    private lateinit var textMember: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_activity)
         supportActionBar?.hide()
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
-        val btnMenu = findViewById<ImageView>(R.id.btnMenu)
-        val navigationView = findViewById<NavigationView>(R.id.navigationView)
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        val mainLayout = findViewById<androidx.constraintlayout.widget.ConstraintLayout>(R.id.mainLayout)
-
-        val etName = findViewById<TextInputEditText>(R.id.editTextText)
-        val etPassword = findViewById<TextInputEditText>(R.id.editTextText2)
-        val rgRole = findViewById<RadioGroup>(R.id.radioGroupRole)
-        val btnSubmit = findViewById<Button>(R.id.btnSubmit)
-
-        btnSubmit.setOnClickListener {
-            val name = etName.text.toString()
-            val password = etPassword.text.toString()
-            val selectedRoleId = when (rgRole.checkedRadioButtonId) {
-                R.id.radioButton5 -> 2 // Waiter
-                R.id.radioButton6 -> 4 // Chef
-                R.id.radioButton7 -> 3 // Cashier
-                else -> 0
-            }
-
-            // Tambahkan log untuk debug
-            android.util.Log.d("ADMIN_LOG", "Selected ID: $selectedRoleId")
-
-            if (name.isEmpty() || password.isEmpty() || selectedRoleId == 0) {
-                Toast.makeText(this, "Harap isi semua data (ID Role: $selectedRoleId)", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val userRequest = UserRequest(name, password, selectedRoleId)
-
-            lifecycleScope.launch {
-                val success = authController.registerController(userRequest)
-                if (success) {
-                    Toast.makeText(this@AdminActivity, "User berhasil ditambahkan", Toast.LENGTH_SHORT).show()
-                    etName.text?.clear()
-                    etPassword.text?.clear()
-                    rgRole.clearCheck()
-                } else {
-                    Toast.makeText(this@AdminActivity, "Gagal menambahkan user", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        btnMenu.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
+        // Inisialisasi View
+        btnLogout = findViewById(R.id.btnLogout)
         
-        // Navigation Drawer Listener
-        navigationView.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.nav_table -> {
-                    mainLayout.visibility = View.GONE
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, TabelFragment()).commit()
-                }
-                R.id.nav_form -> {
-                    mainLayout.visibility = View.VISIBLE
-                    val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-                    if (fragment != null) {
-                        supportFragmentManager.beginTransaction().remove(fragment).commit()
-                    }
-                }
-                R.id.nav_logout -> {
-                    Toast.makeText(this, "Logout berhasil", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
+        itemWork = findViewById(R.id.item_work)
+        itemMenu = findViewById(R.id.item_menu)
+        itemTable = findViewById(R.id.item_table)
+        itemMember = findViewById(R.id.item_member)
+        
+        iconWork = findViewById(R.id.icon_work)
+        iconMenu = findViewById(R.id.icon_menu)
+        iconTable = findViewById(R.id.icon_table)
+        iconMember = findViewById(R.id.icon_member)
+        
+        textWork = findViewById(R.id.text_work)
+        textMenu = findViewById(R.id.text_menu)
+        textTable = findViewById(R.id.text_table)
+        textMember = findViewById(R.id.text_member)
+
+        // Set Fragment default saat pertama kali dibuka (Register/Work)
+        if (savedInstanceState == null) {
+            replaceFragment(RegisterFragment())
+            updateNavUI(0)
         }
 
-        // Bottom Navigation Listener
-        bottomNav.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.nav_work -> {
-                    // Tampilkan form input (Daftar)
-                    mainLayout.visibility = View.VISIBLE
-                    val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-                    if (fragment != null) {
-                        supportFragmentManager.beginTransaction().remove(fragment).commit()
-                    }
-                }
-                R.id.nav_menu -> {
-                    // Tampilkan halaman Pesanan
-                    mainLayout.visibility = View.GONE
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, PesananFragment()).commit()
-                }
-                R.id.nav_table -> {
-                    // Tampilkan halaman Meja
-                    mainLayout.visibility = View.GONE
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MejaFragment()).commit()
-                }
-            }
-            true
+        btnLogout.setOnClickListener {
+            Toast.makeText(this, "Logout berhasil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
+
+        // Event Klik Navigasi
+        itemWork.setOnClickListener {
+            replaceFragment(RegisterFragment())
+            updateNavUI(0)
+        }
+
+        itemMenu.setOnClickListener {
+            replaceFragment(PesananFragment())
+            updateNavUI(1)
+        }
+
+        itemTable.setOnClickListener {
+            replaceFragment(MejaFragment())
+            updateNavUI(2)
+        }
+
+        itemMember.setOnClickListener {
+            replaceFragment(TabelFragment())
+            updateNavUI(3)
+        }
+    }
+
+    // Fungsi untuk memperbarui tampilan UI Navigasi (Warna & Teks) mirip Waiter
+    private fun updateNavUI(selectedIndex: Int) {
+        val navContainer = findViewById<ViewGroup>(R.id.customBottomNav)
+        
+        val transition = AutoTransition().apply {
+            duration = 250
+        }
+        TransitionManager.beginDelayedTransition(navContainer, transition)
+
+        val items = listOf(itemWork, itemMenu, itemTable, itemMember)
+        val icons = listOf(iconWork, iconMenu, iconTable, iconMember)
+        val texts = listOf(textWork, textMenu, textTable, textMember)
+        
+        val colorWhite = ContextCompat.getColor(this, R.color.white)
+        val colorUnselected = ContextCompat.getColor(this, R.color.nav_unselected)
+
+        for (i in items.indices) {
+            if (i == selectedIndex) {
+                // Item Aktif
+                items[i].setBackgroundResource(R.drawable.nav_item_active_bg)
+                icons[i].imageTintList = ColorStateList.valueOf(colorWhite)
+                texts[i].visibility = View.VISIBLE
+            } else {
+                // Item Tidak Aktif
+                items[i].background = null
+                icons[i].imageTintList = ColorStateList.valueOf(colorUnselected)
+                texts[i].visibility = View.GONE
+            }
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

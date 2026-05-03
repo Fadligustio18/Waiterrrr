@@ -3,6 +3,7 @@ package com.waiter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,9 @@ class WaiterMenuAdapter(
         val menu = menuList[position]
         holder.tvMenuName.text = menu.name
         holder.tvMenuPrice.text = "Rp ${menu.price}"
+
+        // Set Animasi
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.item_animation_fall_down)
 
         val fullImageUrl = "${Client.BASE_URL}${menu.imageUrl?.removePrefix("/")}"
         Glide.with(holder.itemView.context)
