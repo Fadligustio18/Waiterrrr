@@ -49,15 +49,25 @@
                     android:textColor="#121111" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btnLogout"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/img_11"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Logout" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/white">
+
+                <ImageView
+                    android:id="@+id/btnLogout"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_11"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Logout" />
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

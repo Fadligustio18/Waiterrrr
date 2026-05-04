@@ -72,6 +72,6 @@
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:cornerRadius="12dp"
-            android:backgroundTint="@color/s" />
+            android:backgroundTint="@color/orange_nav" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

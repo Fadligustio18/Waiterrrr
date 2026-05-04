@@ -90,7 +90,7 @@ class WaiterActivity : AppCompatActivity() {
         
         // Inisialisasi animasi smooth (AutoTransition)
         val transition = AutoTransition().apply {
-            duration = 250 // Durasi animasi dalam milidetik
+            duration = 150 // Disamakan dengan AdminActivity
         }
         TransitionManager.beginDelayedTransition(navContainer, transition)
 
@@ -100,19 +100,29 @@ class WaiterActivity : AppCompatActivity() {
         
         val colorWhite = ContextCompat.getColor(this, R.color.white)
         val colorUnselected = ContextCompat.getColor(this, R.color.nav_unselected)
+        val density = resources.displayMetrics.density
 
         for (i in items.indices) {
+            val params = items[i].layoutParams
             if (i == selectedIndex) {
                 // Item Aktif (Melebar & Berwarna)
                 items[i].setBackgroundResource(R.drawable.nav_item_active_bg)
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                items[i].setPadding((16 * density).toInt(), 0, (16 * density).toInt(), 0)
                 icons[i].imageTintList = ColorStateList.valueOf(colorWhite)
                 texts[i].visibility = View.VISIBLE
+                items[i].elevation = 0f // Reset bayangan saat aktif agar flat
             } else {
-                // Item Tidak Aktif (Mengecil & Abu-abu)
-                items[i].background = null
+                // Item Tidak Aktif (Bentuk Lingkaran & Berbayangan)
+                items[i].setBackgroundResource(R.drawable.nav_item_inactive_bg)
+                // Buat lebar sama dengan tinggi (48dp) agar jadi lingkaran sempurna
+                params.width = (48 * density).toInt()
+                items[i].setPadding(0, 0, 0, 0)
                 icons[i].imageTintList = ColorStateList.valueOf(colorUnselected)
                 texts[i].visibility = View.GONE
+                items[i].elevation = 6 * density // Tambahkan efek bayangan (shadow)
             }
+            items[i].layoutParams = params
         }
     }
 

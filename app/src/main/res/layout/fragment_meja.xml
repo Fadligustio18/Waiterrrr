@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Table Management"
-        android:textColor="#555555"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="start"
+        android:layout_gravity="center"
         android:layout_marginBottom="24dp" />
 
     <com.google.android.material.card.MaterialCardView
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="6dp"
-        app:cardBackgroundColor="@color/s">
+        app:cardElevation="3dp"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,8 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Insert Number or Name Table"
-                app:boxStrokeColor="@color/a"
-                app:hintTextColor="@color/a"
+                app:boxStrokeColor="@color/orange_nav"
+                app:hintTextColor="@color/orange_nav"
                 app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -61,7 +61,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:backgroundTint="@color/a"
+                android:backgroundTint="@color/orange_nav"
                 android:textColor="@android:color/white"
                 app:cornerRadius="16dp" />
         </LinearLayout>
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Table List"
-        android:textColor="#555555"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="12dp" />

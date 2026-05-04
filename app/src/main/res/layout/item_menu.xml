@@ -58,11 +58,11 @@
                 android:id="@+id/tvItemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="Rp 0"
-                android:textColor="@color/d"
+                android:textColor="@color/orange_nav"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp" />
+                android:textStyle="bold" />
         </LinearLayout>
         <ImageView
             android:id="@+id/btnEdit"

@@ -103,7 +103,7 @@ class AdminActivity : AppCompatActivity() {
         val navContainer = findViewById<ViewGroup>(R.id.customBottomNav)
         
         val transition = AutoTransition().apply {
-            duration = 250
+            duration = 150
         }
         TransitionManager.beginDelayedTransition(navContainer, transition)
 
@@ -113,19 +113,29 @@ class AdminActivity : AppCompatActivity() {
         
         val colorWhite = ContextCompat.getColor(this, R.color.white)
         val colorUnselected = ContextCompat.getColor(this, R.color.nav_unselected)
+        val density = resources.displayMetrics.density
 
         for (i in items.indices) {
+            val params = items[i].layoutParams
             if (i == selectedIndex) {
-                // Item Aktif
+                // Item Aktif (Bentuk Pill memanjang)
                 items[i].setBackgroundResource(R.drawable.nav_item_active_bg)
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                items[i].setPadding((20 * density).toInt(), 0, (20 * density).toInt(), 0)
                 icons[i].imageTintList = ColorStateList.valueOf(colorWhite)
                 texts[i].visibility = View.VISIBLE
+                items[i].elevation = 0f
             } else {
-                // Item Tidak Aktif
-                items[i].background = null
+                // Item Tidak Aktif (Bentuk Lingkaran Halus dengan Bayangan)
+                items[i].setBackgroundResource(R.drawable.nav_item_inactive_bg)
+                // Buat lebar sama dengan tinggi (48dp) agar jadi lingkaran sempurna
+                params.width = (48 * density).toInt()
+                items[i].setPadding(0, 0, 0, 0)
                 icons[i].imageTintList = ColorStateList.valueOf(colorUnselected)
                 texts[i].visibility = View.GONE
+                items[i].elevation = 6 * density // Tambahkan efek bayangan
             }
+            items[i].layoutParams = params
         }
     }
 

@@ -24,9 +24,6 @@ class TabelFragment: Fragment(R.layout.fragment_tabel) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnBack = view.findViewById<ImageView>(R.id.btnBack)
-        // Sembunyikan tombol back jika dibuka dari navigasi utama
-        btnBack.visibility = View.GONE
 
         tableData = view.findViewById(R.id.tableData)
         loadData()
