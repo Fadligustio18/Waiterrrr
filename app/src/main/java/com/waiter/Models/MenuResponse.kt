@@ -1,10 +1,12 @@
 package com.waiter.Models
 
+import com.google.gson.annotations.SerializedName
+
 data class MenuResponse(
-    val id: Int,
-    val name: String,
-    val price: Int,
-    val typeId: Int,
-    val typeName: String,
-    val imageUrl: String?
+    @SerializedName("id") val id: Int,
+    @SerializedName("name", alternate = ["Name"]) val name: String,
+    @SerializedName("price", alternate = ["Price"]) val price: Int,
+    @SerializedName("typeId", alternate = ["type_id"]) val typeId: Int,
+    @SerializedName("typeName", alternate = ["type_name"]) val typeName: String,
+    @SerializedName("imageUrl", alternate = ["image_url", "image"]) val imageUrl: String?
 )

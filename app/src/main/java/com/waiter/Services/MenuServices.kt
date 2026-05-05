@@ -22,7 +22,7 @@ interface MenuServices {
         @Part("typeId") typeId: RequestBody,
         @Part("typeName") typeName: RequestBody,
         @Part image: MultipartBody.Part
-    ): Response<ResponseBody>
+    ): Response<com.waiter.Models.MenuResponse>
 
     @DELETE("api/menu/{id}")
     suspend fun deleteMenu(@Path("id") id:Int): Response<Unit>

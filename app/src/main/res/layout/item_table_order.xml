@@ -22,7 +22,7 @@
             android:id="@+id/layoutTableHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#935c00"
+            android:background="@color/orange_nav"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="16dp">
@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/w"
             android:padding="12dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -80,7 +81,7 @@
                 android:layout_marginTop="12dp"
                 app:area_margin="4dp"
                 app:inner_color="@color/white"
-                app:outer_color="@color/a"
+                app:outer_color="@color/orange_nav"
                 app:text="Checkout"
                 app:text_style="bold"
                 app:slider_icon="@drawable/img_8"

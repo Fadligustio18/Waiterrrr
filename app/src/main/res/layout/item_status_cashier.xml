@@ -20,7 +20,7 @@
             android:id="@+id/layoutCashierHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/s"
+            android:background="@color/orange_nav"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="16dp">
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/w"
             android:padding="16dp">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -84,17 +85,22 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <Button
+            <com.ncorti.slidetoact.SlideToActView
                 android:id="@+id/btnDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:backgroundTint="@color/a"
-                android:textStyle="bold"
-                android:text="Selesai Pembayaran"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                app:cornerRadius="8dp" />
+                app:area_margin="4dp"
+                app:inner_color="@color/white"
+                app:outer_color="@color/orange_nav"
+                app:text="Swipe to pay"
+                app:text_style="bold"
+                app:slider_icon="@drawable/img_8"
+                app:icon_margin="10dp"
+                app:slider_icon_color="@color/black"
+                app:text_size="14sp"
+                app:slider_height="50dp"
+                app:bump_vibration="50" />
         </LinearLayout>
 
     </LinearLayout>

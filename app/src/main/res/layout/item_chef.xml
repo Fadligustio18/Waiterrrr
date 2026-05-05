@@ -20,7 +20,7 @@
             android:id="@+id/layoutChefHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#935c00"
+            android:background="@color/orange_nav"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="16dp">
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/w"
             android:padding="16dp">
 
             <androidx.recyclerview.widget.RecyclerView

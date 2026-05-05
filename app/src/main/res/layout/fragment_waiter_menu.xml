@@ -20,7 +20,7 @@
             android:orientation="horizontal"
             android:padding="16dp"
             android:gravity="center_vertical"
-            android:background="@color/s">
+            android:background="@color/orange_nav">
 
             <ImageView
                 android:layout_width="36dp"
@@ -70,6 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingTop="8dp"
+        android:paddingBottom="85dp"
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardTableSelect"

@@ -24,7 +24,7 @@
         android:background="@drawable/bg_quantity"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="4dp"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,10 +32,12 @@
 
         <ImageButton
             android:id="@+id/btnMinus"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/bg_circle_white"
             android:src="@drawable/img_13"
+            app:tint="@color/black"
+            android:padding="6dp"
             android:scaleType="centerInside" />
 
         <TextView
@@ -44,18 +46,19 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="1"
-            android:textColor="#333333"
-            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btnPlus"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/bg_circle_black"
             android:src="@drawable/img_12"
+            app:tint="@color/white"
+            android:padding="6dp"
             android:scaleType="centerInside" />
-
 
     </LinearLayout>
 
@@ -66,7 +69,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/img_15"
         android:scaleType="centerInside"
-        android:tint="@color/a"
+        app:tint="@color/a"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

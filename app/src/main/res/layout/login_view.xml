@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D4D4D4">
+    android:background="@color/w">
 
 
     <com.google.android.material.card.MaterialCardView
@@ -105,7 +105,7 @@
                 android:text="@string/login"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/orange_nav"
-                app:cornerRadius="10dp"
+                app:cornerRadius="8dp"
                 app:strokeWidth="0dp" />
 
             <TextView

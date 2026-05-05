@@ -3,12 +3,12 @@ package com.waiter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ncorti.slidetoact.SlideToActView
 import com.waiter.Models.OrderListItem
 import com.waiter.Models.OrderItemDetail
 import com.waiter.Controllers.OrderControllers
@@ -31,7 +31,7 @@ class CashierOrderAdapter(
         val tvTotalItems: TextView = view.findViewById(R.id.tvTotalItems)
         val tvTotalPrice: TextView = view.findViewById(R.id.tvTotalPrice)
         val rvOrderItems: RecyclerView = view.findViewById(R.id.rvOrderItems)
-        val btnDone: Button = view.findViewById(R.id.btnDone)
+        val btnDone: SlideToActView = view.findViewById(R.id.btnDone)
         val btnDrop: ImageView = view.findViewById(R.id.btnDrop)
         val layoutCashierHeader: View = view.findViewById(R.id.layoutCashierHeader)
     }
@@ -81,10 +81,14 @@ class CashierOrderAdapter(
         holder.layoutCashierHeader.setOnClickListener(toggleDropdown)
         holder.btnDrop.setOnClickListener(toggleDropdown)
 
-        holder.btnDone.setOnClickListener {
-            val currentPosition = holder.bindingAdapterPosition
-            if (currentPosition != RecyclerView.NO_POSITION) {
-                processPayment(holder.itemView.context, order.id)
+        // Reset status slide agar tidak macet di posisi selesai saat di-bind ulang
+        holder.btnDone.setCompleted(false, false)
+        holder.btnDone.onSlideCompleteListener = object : SlideToActView.OnSlideCompleteListener {
+            override fun onSlideComplete(view: SlideToActView) {
+                val currentPosition = holder.bindingAdapterPosition
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    processPayment(holder.itemView.context, order.id)
+                }
             }
         }
     }

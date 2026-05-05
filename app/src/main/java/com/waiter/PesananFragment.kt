@@ -98,7 +98,7 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
 
             // Jalankan di Coroutine
             viewLifecycleOwner.lifecycleScope.launch {
-                val success = menuController.createMenu(
+                val createdMenu = menuController.createMenu(
                     requireContext(),
                     name,
                     price,
@@ -107,13 +107,14 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
                     selectedImageUri!!
                 )
 
-                if (success) {
-                    // Tambah ke list lokal jika berhasil ke API
+                if (createdMenu != null) {
+                    // Tambah ke list lokal menggunakan ID ASLI dari server
                     val newMenu = Menu(
-                        id = System.currentTimeMillis().toString(),
-                        name = name,
-                        price = price,
-                        category = typeName,
+                        id = createdMenu.id.toString(),
+                        name = createdMenu.name,
+                        price = createdMenu.price.toString(),
+                        category = createdMenu.typeName ?: typeName,
+                        imageUrl = createdMenu.imageUrl,
                         imageUri = selectedImageUri
                     )
                     menuList.add(0, newMenu)
@@ -130,7 +131,7 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
                     layoutPlaceholder.visibility = View.VISIBLE
                     selectedImageUri = null
                 } else {
-                    Toast.makeText(requireContext(), "Gagal menyimpan menu ke server", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Gagal menyimpan menu ke server (Cek format data)", Toast.LENGTH_SHORT).show()
                 }
             }
         }
