@@ -96,32 +96,13 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
                 return@setOnClickListener
             }
 
-            // Jalankan di Coroutine
             viewLifecycleOwner.lifecycleScope.launch {
-                val createdMenu = menuController.createMenu(
-                    requireContext(),
-                    name,
-                    price,
-                    typeId,
-                    typeName,
-                    selectedImageUri!!
+                val success = menuController.createMenu(
+                    requireContext(), name, price, typeId, typeName, selectedImageUri!!
                 )
 
-                if (createdMenu != null) {
-                    // Tambah ke list lokal menggunakan ID ASLI dari server
-                    val newMenu = Menu(
-                        id = createdMenu.id.toString(),
-                        name = createdMenu.name,
-                        price = createdMenu.price.toString(),
-                        category = createdMenu.typeName ?: typeName,
-                        imageUrl = createdMenu.imageUrl,
-                        imageUri = selectedImageUri
-                    )
-                    menuList.add(0, newMenu)
-                    menuAdapter.notifyItemInserted(0)
-                    rvMenuList.scrollToPosition(0)
-
-                    Toast.makeText(requireContext(), "Menu $name berhasil disimpan ke server", Toast.LENGTH_SHORT).show()
+                if (success) {
+                    Toast.makeText(requireContext(), "Menu $name berhasil disimpan", Toast.LENGTH_SHORT).show()
 
                     // Reset form
                     etMenuName.text?.clear()
@@ -130,8 +111,11 @@ class PesananFragment : Fragment(R.layout.fragment_pesanan) {
                     ivMenuImage.setImageDrawable(null)
                     layoutPlaceholder.visibility = View.VISIBLE
                     selectedImageUri = null
+
+                    // ✅ Reload dari server untuk dapat data terbaru termasuk ID
+                    loadMenuFromServer()
                 } else {
-                    Toast.makeText(requireContext(), "Gagal menyimpan menu ke server (Cek format data)", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Gagal menyimpan menu ke server", Toast.LENGTH_SHORT).show()
                 }
             }
         }

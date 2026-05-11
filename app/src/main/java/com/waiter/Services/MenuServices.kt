@@ -19,10 +19,10 @@ interface MenuServices {
     suspend fun createMenu(
         @Part("Name") name: RequestBody,
         @Part("Price") price: RequestBody,
-        @Part("typeId") typeId: RequestBody,
-        @Part("typeName") typeName: RequestBody,
+        @Part("TypeId") typeId: RequestBody,
+        @Part("TypeName") typeName: RequestBody,
         @Part image: MultipartBody.Part
-    ): Response<com.waiter.Models.MenuResponse>
+    ): Response<ResponseBody>
 
     @DELETE("api/menu/{id}")
     suspend fun deleteMenu(@Path("id") id:Int): Response<Unit>

@@ -22,9 +22,9 @@ class MenuControllers {
         typeId: String,
         typeName: String,
         imageUri: Uri
-    ): com.waiter.Models.MenuResponse? = withContext(Dispatchers.IO) {
+    ): Boolean = withContext(Dispatchers.IO) {
         try {
-            val file = uriToFile(context, imageUri) ?: return@withContext null
+            val file = uriToFile(context, imageUri) ?: return@withContext false
             val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
             val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
@@ -34,19 +34,10 @@ class MenuControllers {
             val typeNameBody = typeName.toRequestBody("text/plain".toMediaTypeOrNull())
 
             val response = service.createMenu(nameBody, priceBody, typeIdBody, typeNameBody, imagePart)
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body == null) {
-                    android.util.Log.e("MenuControllers", "Response successful but body is null")
-                }
-                body
-            } else {
-                android.util.Log.e("MenuControllers", "Response failed: ${response.code()} ${response.message()}")
-                null
-            }
+            response.isSuccessful  // ← Cukup cek isSuccessful saja
         } catch (e: Exception) {
-            android.util.Log.e("MenuControllers", "Exception in createMenu: ${e.message}", e)
-            null
+            android.util.Log.e("MenuControllers", "Exception: ${e.message}", e)
+            false
         }
     }
 

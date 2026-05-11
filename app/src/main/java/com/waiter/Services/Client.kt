@@ -1,4 +1,5 @@
 package com.waiter.Services
+
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.getValue
@@ -8,6 +9,7 @@ import kotlin.jvm.java
 object Client {
     // UBAH IP DI SINI SAJA (Tanpa Spasi)
     const val BASE_URL = "http://192.168.69.16:3000/"
+
 
     private val http by lazy {
         Retrofit.Builder()
